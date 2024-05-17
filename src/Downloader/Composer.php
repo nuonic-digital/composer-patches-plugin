@@ -1,5 +1,5 @@
 <?php
-namespace Netresearch\Composer\Patches\Downloader;
+namespace Nuonic\ComposerPatchesPlugin\Downloader;
 
 /*                                                                        *
  * This script belongs to the Composer-TYPO3-Installer package            *
@@ -13,7 +13,10 @@ namespace Netresearch\Composer\Patches\Downloader;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Composer\Json\JsonFile;
+use Composer\Util\HttpDownloader;
 use Composer\Util\RemoteFilesystem;
+use Netresearch\Composer\Patches\Downloader\stdClass;
 
 /**
  * Downloader, which uses the composer RemoteFilesystem
@@ -26,6 +29,11 @@ class Composer implements DownloaderInterface
     protected $remoteFileSystem;
 
     /**
+     * @var HttpDownloader
+     */
+    private $httpDownloader;
+
+    /**
      * Construct the RFS
      *
      * @param \Composer\IO\IOInterface $io
@@ -33,6 +41,7 @@ class Composer implements DownloaderInterface
     public function __construct(\Composer\IO\IOInterface $io, \Composer\Config $config)
     {
         $this->remoteFileSystem = new RemoteFilesystem($io, $config);
+        $this->httpDownloader = new HttpDownloader($io, $config);
     }
 
     /**
@@ -71,7 +80,6 @@ class Composer implements DownloaderInterface
      */
     public function getJson($url)
     {
-        $json = new \Composer\Json\JsonFile($url, $this->remoteFileSystem);
-        return $json->read();
+        return (new JsonFile($url, $this->httpDownloader))->read();
     }
 }

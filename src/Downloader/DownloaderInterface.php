@@ -1,5 +1,5 @@
 <?php
-namespace Netresearch\Composer\Patches\Downloader;
+namespace Nuonic\ComposerPatchesPlugin\Downloader;
 
 /*                                                                        *
  * This script belongs to the Composer-TYPO3-Installer package            *
@@ -12,6 +12,8 @@ namespace Netresearch\Composer\Patches\Downloader;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
+
+use Netresearch\Composer\Patches\Downloader\stdClass;
 
 /**
  * Downloader interface

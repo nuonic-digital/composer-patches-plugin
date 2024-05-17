@@ -1,5 +1,5 @@
 <?php
-namespace Netresearch\Composer\Patches;
+namespace Nuonic\ComposerPatchesPlugin;
 
 /*                                                                        *
  * This script belongs to the Composer-TYPO3-Installer package            *
@@ -35,7 +35,7 @@ class PatchSet
     protected $patches;
 
     /**
-     * @var Downloader\DownloaderInterface
+     * @var \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface
      */
     protected $downloader;
 
@@ -50,9 +50,9 @@ class PatchSet
      * Constructor - set the paths
      *
      * @param array|object|string            $source
-     * @param Downloader\DownloaderInterface $downloader
+     * @param \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader
      */
-    public function __construct($source, Downloader\DownloaderInterface $downloader)
+    public function __construct($source, \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader)
     {
         $this->source = $source;
         $this->setDownloader($downloader);
@@ -61,7 +61,7 @@ class PatchSet
     /**
      * Get the downloader
      *
-     * @return Downloader\DownloaderInterface
+     * @return \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface
      * @throws Exception
      */
     public function getDownloader()
@@ -72,7 +72,7 @@ class PatchSet
         return $this->downloader;
     }
 
-    public function setDownloader(Downloader\DownloaderInterface $downloader)
+    public function setDownloader(\Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader)
     {
         $this->downloader = $downloader;
     }

@@ -1,5 +1,5 @@
 {
-    "name": "netresearch/composer-patches-plugin",
+    "name": "nuonic/composer-patches-plugin",
     "type": "composer-plugin",
     "license": "GPL-2.0",
     "description": "Composer patches plugin",
@@ -8,18 +8,17 @@
     ],
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "": "src/"}
+        "psr-4": {
+            "Nuonic\\ComposerPatchesPlugin": "src/"
+        }
     },
     "require": {
         "composer-plugin-api": "^2.0"
-    },    
+    },
     "require-dev": {
         "composer/composer": "^2.0"
     },
     "extra": {
-        "class": "Netresearch\\Composer\\Patches\\Plugin",
-        "branch-alias": {
-            "dev-master": "1.4.x-dev"
-        }
+        "class": "Nuonic\\ComposerPatchesPlugin\\Plugin"
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Netresearch\Composer\Patches;
+namespace Nuonic\ComposerPatchesPlugin;
 
 /*                                                                        *
  * This script belongs to the Composer-TYPO3-Installer package            *
@@ -14,19 +14,18 @@ namespace Netresearch\Composer\Patches;
  *                                                                        */
 
 use Composer\Composer;
+use Composer\DependencyResolver\Operation\UninstallOperation;
+use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\Downloader\DownloaderInterface;
+use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\Factory;
+use Composer\Installer\PackageEvent;
 use Composer\Installer\PackageEvents;
 use Composer\IO\IOInterface;
-use Composer\Plugin\PluginInterface;
-
-use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
-use Composer\Script\ScriptEvents;
-use Composer\EventDispatcher\EventSubscriberInterface;
-use Composer\DependencyResolver\Operation\UpdateOperation;
-use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\Package\PackageInterface;
+use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
+use Composer\Script\ScriptEvents;
 
 /**
  * The patchSet integration for Composer, which applies the patches contained
@@ -62,7 +61,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->io = $io;
         $this->composer = $composer;
-        $this->downloader = new Downloader\Composer($io, Factory::createConfig($io));
+        $this->downloader = new \Nuonic\ComposerPatchesPlugin\Downloader\Composer($io, Factory::createConfig($io));
 
         // Add the installer
         $noopInstaller = new Installer($io);
@@ -243,9 +242,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Write a notice to IO
      *
      * @param string $action
-     * @param \Netresearch\Composer\Patches\Patch $patch
+     * @param \Nuonic\ComposerPatchesPlugin\Patch $patch
      * @param \Composer\Package\PackageInterface $package
-     * @param \Netresearch\Composer\Patches\Exception $exception
+     * @param \Nuonic\ComposerPatchesPlugin\Exception $exception
      */
     protected function writePatchNotice($action, Patch $patch, PackageInterface $package, $exception = null)
     {

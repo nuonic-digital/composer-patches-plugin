@@ -1,5 +1,5 @@
 <?php
-namespace Netresearch\Composer\Patches;
+namespace Nuonic\ComposerPatchesPlugin;
 
 /*                                                                        *
  * This script belongs to the Composer-TYPO3-Installer package            *

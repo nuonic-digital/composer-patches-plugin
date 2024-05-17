@@ -1,5 +1,7 @@
 # composer-patches-plugin
 
+> This plugin is based on the netresearch/composer-patches-plugin
+
 This plugin allows you to provide patches for any package from any package.
 
 If you don't want a patch package outside the root package, consider providing it as package in the [repositories key](https://getcomposer.org/doc/04-schema.md#repositories)
@@ -16,7 +18,7 @@ If you don't want a patch package outside the root package, consider providing i
                 "name": "vendor/package-patches",
                 "version": "1.0.0",
                 "require": {
-                    "netresearch/composer-patches-plugin": "~1.0"
+                    "nuonic/composer-patches-plugin": "~1.0"
                 },
                 "extra": {
                     "patches": {
@@ -52,11 +54,11 @@ You may provide patches per package and optionally by version constraints:
 ## Provide patches by package only
 ```json
 {
-    "name": "netresearch/typo3-patches",
+    "name": "nuonic/typo3-patches",
     "version": "1.0.0",
     "type": "metapackage",
     "require": {
-        "netresearch/composer-patches-plugin": "~1.0"
+        "nuonic/composer-patches-plugin": "~1.0"
     },
     "extra": {
         "patches": {
@@ -81,11 +83,11 @@ You may provide patches per package and optionally by version constraints:
 composer.json:
 ```json
 {
-    "name": "netresearch/typo3-patches",
+    "name": "nuonic/typo3-patches",
     "version": "1.0.0",
     "type": "metapackage",
     "require": {
-        "netresearch/composer-patches-plugin": "~1.0"
+        "nuonic/composer-patches-plugin": "~1.0"
     },
     "extra": {
         "patches": {
@@ -128,11 +130,11 @@ You can put any part of the patches object into another JSON and load it via an 
 composer.json:
 ```json
 {
-    "name": "netresearch/typo3-patches",
+    "name": "nuonic/typo3-patches",
     "version": "1.0.0",
     "type": "metapackage",
     "require": {
-        "netresearch/composer-patches-plugin": "~1.0"
+        "nuonic/composer-patches-plugin": "~1.0"
     },
     "extra": {
         "patches": {
@@ -184,7 +186,7 @@ composer.json:
                 "name": "vendor/package-patches",
                 "version": "1.0.0",
                 "require": {
-                    "netresearch/composer-patches-plugin": "~1.0"
+                    "nuonic/composer-patches-plugin": "~1.0"
                 },
                 "extra": {
                     "patches": {
@@ -236,12 +238,12 @@ just require the package with the patches.
 
 ```json
 {
-    "name": "netresearch/patched-typo3",
+    "name": "nuonic/patched-typo3",
     "type": "project",
     "description": "A patched version of typo3",
     "minimum-stability": "dev",
     "require": {
-        "netresearch/typo3-patches": "~1.0",
+        "nuonic/typo3-patches": "~1.0",
         "typo3/cms": "6.2.0-beta3"
     }
 }
