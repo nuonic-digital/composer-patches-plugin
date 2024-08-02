@@ -16,7 +16,6 @@ namespace Nuonic\ComposerPatchesPlugin;
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\DependencyResolver\Operation\UpdateOperation;
-use Composer\Downloader\DownloaderInterface;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\Factory;
 use Composer\Installer\PackageEvent;
@@ -26,6 +25,7 @@ use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface;
 
 /**
  * The patchSet integration for Composer, which applies the patches contained
@@ -54,8 +54,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Activate the plugin (called from {@see \Composer\Plugin\PluginManager})
      *
-     * @param \Composer\Composer $composer
-     * @param \Composer\IO\IOInterface $io
+     * @param Composer $composer
+     * @param IOInterface $io
      */
     public function activate(Composer $composer, IOInterface $io)
     {

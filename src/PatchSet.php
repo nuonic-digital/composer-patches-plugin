@@ -14,6 +14,7 @@ namespace Nuonic\ComposerPatchesPlugin;
  *                                                                        */
 
 use Composer\Package\Version\VersionParser;
+use Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface;
 
 /**
  * Model, representing a patchSet
@@ -35,7 +36,7 @@ class PatchSet
     protected $patches;
 
     /**
-     * @var \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface
+     * @var DownloaderInterface
      */
     protected $downloader;
 
@@ -50,9 +51,9 @@ class PatchSet
      * Constructor - set the paths
      *
      * @param array|object|string            $source
-     * @param \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader
+     * @param DownloaderInterface $downloader
      */
-    public function __construct($source, \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader)
+    public function __construct($source, DownloaderInterface $downloader)
     {
         $this->source = $source;
         $this->setDownloader($downloader);
@@ -61,7 +62,7 @@ class PatchSet
     /**
      * Get the downloader
      *
-     * @return \Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface
+     * @return DownloaderInterface
      * @throws Exception
      */
     public function getDownloader()
@@ -72,7 +73,7 @@ class PatchSet
         return $this->downloader;
     }
 
-    public function setDownloader(\Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface $downloader)
+    public function setDownloader(DownloaderInterface $downloader)
     {
         $this->downloader = $downloader;
     }

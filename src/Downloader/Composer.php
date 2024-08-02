@@ -66,6 +66,7 @@ class Composer implements DownloaderInterface
         $originUrl = $this->getOriginUrl($url);
 
         if (is_null($originUrl)) {
+            var_dump(getcwd());
             return file_get_contents($url);
         }
 

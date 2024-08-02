@@ -13,8 +13,6 @@ namespace Nuonic\ComposerPatchesPlugin\Downloader;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use Netresearch\Composer\Patches\Downloader\stdClass;
-
 /**
  * Downloader interface
  *
@@ -34,7 +32,7 @@ interface DownloaderInterface
      * Download file and decode the JSON string to PHP object
      *
      * @param  string $json
-     * @return stdClass
+     * @return \stdClass
      */
     public function getJson($url);
 }
