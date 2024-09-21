@@ -24,6 +24,7 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
+use Composer\Script\Event as ScriptEvent;
 use Composer\Script\ScriptEvents;
 use Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface;
 
@@ -102,12 +103,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            PackageEvents::PRE_PACKAGE_UNINSTALL => array('restore'),
-            PackageEvents::PRE_PACKAGE_UPDATE => array('restore'),
-            ScriptEvents::POST_UPDATE_CMD => array('apply'),
-            ScriptEvents::POST_INSTALL_CMD => array('apply'),
-        );
+        return [
+            PackageEvents::PRE_PACKAGE_UNINSTALL => ['restore'],
+            PackageEvents::PRE_PACKAGE_UPDATE => ['restore'],
+            ScriptEvents::POST_UPDATE_CMD => ['apply'],
+            ScriptEvents::POST_INSTALL_CMD => ['apply']
+        ];
     }
 
     /**
@@ -129,7 +130,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             throw new Exception('Unexpected operation ' . get_class($operation));
         }
 
-        static $history = array();
+        static $history = [];
 
         foreach ($this->getPatches($initialPackage, $history) as $patchesAndPackage) {
             list($patches, $package) = $patchesAndPackage;
@@ -152,11 +153,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Event handler to the postUpdateCmd/postInstallCmd events: Loop through all
      * installed packages and apply patches for them.
      *
-     * @param \Composer\Script\Event $event
+     * @param ScriptEvent $event
      */
     public function apply(Event $event)
     {
-        static $history = array();
+        static $history = [];
 
         $this->io->write('<info>Maintaining patches</info>');
 
@@ -198,27 +199,27 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function getPatches(PackageInterface $initialPackage, array &$history)
     {
         $packages = $this->composer->getRepositoryManager()->getLocalRepository()->getPackages();
-        $patchSets = array();
+        $patchSets = [];
         foreach ($packages as $package) {
             $extra = $package->getExtra();
             if (isset($extra['patches']) && $initialPackage->getName() != $package->getName()) {
-                $patchSets[$package->getName()] = array($extra['patches'], array($initialPackage));
+                $patchSets[$package->getName()] = [$extra['patches'], [$initialPackage]];
             }
         }
 
         $extra = $initialPackage->getExtra();
         if (isset($extra['patches'])) {
-            $patchSets[$initialPackage->getName()] = array($extra['patches'], $packages);
+            $patchSets[$initialPackage->getName()] = [$extra['patches'], $packages];
         }
 
-        $patchesAndPackages = array();
+        $patchesAndPackages = [];
         foreach ($patchSets as $sourceName => $patchConfAndPackages) {
             $patchSet = new PatchSet($patchConfAndPackages[0], $this->downloader);
             foreach ($patchConfAndPackages[1] as $package) {
                 $id = $sourceName . '->' . $package->getName();
                 $patches = $patchSet->getPatches($package->getName(), $package->getVersion());
                 if (!array_key_exists($id, $history) && count($patches)) {
-                    $patchesAndPackages[$id] = array($patches, $package);
+                    $patchesAndPackages[$id] = [$patches, $package];
                     $history[$id] = true;
                 }
             }
@@ -248,7 +249,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected function writePatchNotice($action, Patch $patch, PackageInterface $package, $exception = null)
     {
-        $adverbMap = array('test' => 'on', 'apply' => 'to', 'revert' => 'from');
+        $adverbMap = ['test' => 'on', 'apply' => 'to', 'revert' => 'from'];
         if ($action == 'test' && !$this->io->isVeryVerbose()) {
             return;
         }
