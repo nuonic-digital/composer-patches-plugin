@@ -27,6 +27,7 @@ use Composer\Script\Event;
 use Composer\Script\Event as ScriptEvent;
 use Composer\Script\ScriptEvents;
 use Nuonic\ComposerPatchesPlugin\Downloader\DownloaderInterface;
+use Nuonic\ComposerPatchesPlugin\Patch;
 
 /**
  * The patchSet integration for Composer, which applies the patches contained
@@ -133,10 +134,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         static $history = [];
 
         foreach ($this->getPatches($initialPackage, $history) as $patchesAndPackage) {
+            /** @var array<Patch> $patches */
             list($patches, $package) = $patchesAndPackage;
             $packagePath = $this->getPackagePath($package);
             foreach (array_reverse($patches) as $patch) {
-                /* @var $patch Patch */
                 try {
                     $patch->revert($packagePath, true);
                 } catch (PatchCommandException $e) {
@@ -165,7 +166,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         foreach ($packages as $initialPackage) {
             foreach ($this->getPatches($initialPackage, $history) as $patchesAndPackage) {
-                /* @var $patches Patch[] */
+                /** @var array<Patch> $patches */
                 list($patches, $package) = $patchesAndPackage;
                 $packagePath = $this->getPackagePath($package);
                 foreach ($patches as $patch) {

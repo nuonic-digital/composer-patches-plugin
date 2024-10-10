@@ -264,10 +264,10 @@ class Patch
      */
     protected function runCommand($toPath, $revert = false, $dryRun = false)
     {
-        $command = $this->whichPatchCmd() . ' -f -p1 --no-backup-if-mismatch -r -';
+        $command = $this->whichPatchCmd() . ' --force --strip=1 --no-backup-if-mismatch -reject-file=- --ignore-whitespace';
 
         if ($revert) {
-            $command .= ' -R';
+            $command .= ' --reverse';
         }
         if (isset($this->info->args)) {
             $command .= ' ' . $this->info->args;
